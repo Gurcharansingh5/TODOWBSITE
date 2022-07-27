@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="{% url 'index' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+  <label for="usr">Add New Task :</label>
+  <input type="text" class="form-control" id="usr" name="title" required>
+
+  <label for="comment">Description:</label>
+  <textarea class="form-control" rows="5" id="comment" name="description" required>{{update.description}}</textarea>
+</div>
+
+<button type="submit" class="btn btn-info">submit</button>
+    </form>
+<div class="table-responsive">
+    <table class="datatable table table-hover table-center mb-0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Date</th>
+
+        <th>action</th>
+    </tr>
+    </thead>
+{% for i in alltasks %}
+        <tbody>
+        <tr>
+            <td>{{i.id}}</td>
+            <td>{{i.title}}</td>
+            <td>{{i.description}}</td>
+            <td>{{i.created_date}}</td>
+           <td><a href="{% url 'updatetask' i.id %}"><button class="btn btn-info">update</button></a></td>
+            <td><a href="{% url 'task_delete' i.id %}"><button class="btn btn-danger">delete</button></a></td>
+
+        </tr>
+        </tbody>
+{% endfor %}
+        </table>
+</div>
+
+
+{% endblock %}
